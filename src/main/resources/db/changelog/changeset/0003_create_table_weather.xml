@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="initial_0003_01" author="gorchanyuk">
+        <createSequence sequenceName="my_weather_id_seq" incrementBy="50"
+                        startValue="1" cycle="false"/>
+    </changeSet>
+    <changeSet id="initial_0003_02" author="gorchanyuk">
+        <createTable tableName="weather">
+            <column name="id" type="BIGINT" defaultValueComputed="nextval('my_weather_id_seq')">
+                <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="weather_id_pkey"/>
+            </column>
+            <column name="temperature" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pressure" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="wind_gust" type="DOUBLE">
+            </column>
+            <column name="wind_speed" type="DOUBLE">
+            </column>
+            <column name="date_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_weather_city"
+                             referencedTableName="city" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

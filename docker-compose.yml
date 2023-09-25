@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  app:
+    image: 'gorchanyuk_weather_client:latest'
+    build:
+      context: .
+
+    container_name: gorchanyuk_weather_client
+    working_dir: /usr/src/myapp
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/weather_client
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+
+  database:
+    container_name: database
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: weather_client
+    ports:
+      - "5433:5432"
+
